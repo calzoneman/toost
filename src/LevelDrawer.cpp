@@ -1696,8 +1696,17 @@ void LevelDrawer::DrawItem(const std::unordered_set<short>& K, bool L) {
 						} else {
 							path = level.LH.GameStyle | LevelData::OBJ_42;
 						}
-						if (objH != 2 && level.CObjLinkType[objLid + 1] == 13 /* bullet bill blaster */) {
-							KY = (std::round(objH - 2) / 2.0 - 0.5) * Zm;
+						if (objH != 2) {
+							switch (level.CObjLinkType[objLid + 1]) {
+								case 13: /* bullet bill blaster */
+									KY = (std::round(objH - 2) / 2.0 - 0.5) * Zm;
+									break;
+								case 78: /* pokey */
+									KY = (std::round(objH - 3) / 2.0 - 0.5) * Zm;
+									break;
+								default:
+									break;
+							}
 						}
 						LX = std::round((float)((-1 + (std::round(objW) / 2) / 2.0 + objX / 160.0) * Zm));
 						LY = (H + objH / 2.0 - 0.5) * Zm - (float)((objH - 0.5 + objY / 160.0) * Zm) + KY;
@@ -2350,6 +2359,7 @@ void LevelDrawer::DrawItem(const std::unordered_set<short>& K, bool L) {
 						break;
 					}
 					case 78: {
+						level.CObjLinkType[objLid + 1] = 78;
 						// 仙人掌
 						LX = std::round((float)(-objW / 2.0 + objX / 160.0) * Zm);
 						LY = std::round((H + 1) * Zm - (float)((objH + std::round(objY) / 160.0) * Zm) + KY);
